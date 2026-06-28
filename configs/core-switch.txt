@@ -1,0 +1,141 @@
+! =========================
+! DHCP Excluded Addresses
+! =========================
+
+ip dhcp excluded-address 192.168.10.1 192.168.10.31
+ip dhcp excluded-address 192.168.10.101 192.168.10.254
+
+ip dhcp excluded-address 192.168.20.1 192.168.20.31
+ip dhcp excluded-address 192.168.20.101 192.168.20.254
+
+ip dhcp excluded-address 192.168.30.1 192.168.30.31
+ip dhcp excluded-address 192.168.30.101 192.168.30.254
+
+ip dhcp excluded-address 192.168.40.1 192.168.40.31
+ip dhcp excluded-address 192.168.40.101 192.168.40.254
+
+ip dhcp excluded-address 192.168.50.1 192.168.50.31
+ip dhcp excluded-address 192.168.50.101 192.168.50.254
+
+ip dhcp excluded-address 192.168.60.1 192.168.60.31
+ip dhcp excluded-address 192.168.60.101 192.168.60.254
+
+
+! =========================
+! DHCP Pools
+! =========================
+
+ip dhcp pool VLAN10
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.254
+ dns-server 208.200.193.10
+
+ip dhcp pool VLAN20
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.254
+ dns-server 208.200.193.10
+
+ip dhcp pool VLAN30
+ network 192.168.30.0 255.255.255.0
+ default-router 192.168.30.254
+ dns-server 208.200.193.10
+
+ip dhcp pool VLAN40
+ network 192.168.40.0 255.255.255.0
+ default-router 192.168.40.254
+ dns-server 208.200.193.10
+
+ip dhcp pool VLAN50
+ network 192.168.50.0 255.255.255.0
+ default-router 192.168.50.254
+ dns-server 208.200.193.10
+
+ip dhcp pool VLAN60
+ network 192.168.60.0 255.255.255.0
+ default-router 192.168.60.254
+ dns-server 208.200.193.10
+
+
+! =========================
+! Trunk Interfaces
+! =========================
+
+interface GigabitEthernet1/0/1
+ switchport mode trunk
+
+interface GigabitEthernet1/0/2
+ switchport mode trunk
+
+interface GigabitEthernet1/0/3
+ switchport mode trunk
+
+
+! =========================
+! Routed Link to Firewall
+! =========================
+
+interface GigabitEthernet1/0/4
+ no switchport
+ ip address 10.10.10.2 255.255.255.0
+ duplex auto
+ speed auto
+
+
+! =========================
+! VLAN Interfaces (SVI + HSRP)
+! =========================
+
+interface Vlan10
+ mac-address 000c.85dd.0e01
+ ip address 192.168.10.1 255.255.255.0
+ standby 1 ip 192.168.10.254
+ standby 1 priority 200
+ standby 1 preempt
+
+interface Vlan20
+ mac-address 000c.85dd.0e03
+ ip address 192.168.20.1 255.255.255.0
+ standby 1 ip 192.168.20.254
+ standby 1 preempt
+
+interface Vlan30
+ mac-address 000c.85dd.0e04
+ ip address 192.168.30.1 255.255.255.0
+ standby 1 ip 192.168.30.254
+ standby 1 priority 200
+ standby 1 preempt
+
+interface Vlan40
+ mac-address 000c.85dd.0e05
+ ip address 192.168.40.1 255.255.255.0
+ standby 1 ip 192.168.40.254
+ standby 1 priority 200
+ standby 1 preempt
+
+interface Vlan50
+ mac-address 000c.85dd.0e06
+ ip address 192.168.50.1 255.255.255.0
+ standby 1 ip 192.168.50.254
+ standby 1 priority 200
+ standby 1 preempt
+
+interface Vlan60
+ mac-address 000c.85dd.0e07
+ ip address 192.168.60.1 255.255.255.0
+ standby 1 ip 192.168.60.254
+ standby 1 priority 200
+ standby 1 preempt
+
+
+! =========================
+! Routing Configuration
+! =========================
+
+router rip
+ version 2
+ no auto-summary
+ network 192.168.0.0
+
+ip classless
+
+ip route 0.0.0.0 0.0.0.0 10.10.10.1
