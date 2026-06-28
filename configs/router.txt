@@ -1,0 +1,12 @@
+! =========================
+! Routing Configuration
+! =========================
+
+router rip
+ version 2
+ no auto-summary
+ network 192.168.0.0
+
+ip classless
+
+ip route 0.0.0.0 0.0.0.0 10.10.10.1
