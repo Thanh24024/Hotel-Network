@@ -1,4 +1,13 @@
 ! =========================
+! System Configuration
+! =========================
+
+hostname Core1
+
+ip routing
+
+
+! =========================
 ! DHCP Excluded Addresses
 ! =========================
 
@@ -57,6 +66,14 @@ ip dhcp pool VLAN60
 
 
 ! =========================
+! Spanning Tree Configuration
+! =========================
+
+spanning-tree mode pvst
+spanning-tree vlan 10,20,30,40,50,60 priority 24576
+
+
+! =========================
 ! Trunk Interfaces
 ! =========================
 
@@ -77,8 +94,6 @@ interface GigabitEthernet1/0/3
 interface GigabitEthernet1/0/4
  no switchport
  ip address 10.10.10.2 255.255.255.0
- duplex auto
- speed auto
 
 
 ! =========================
@@ -86,41 +101,36 @@ interface GigabitEthernet1/0/4
 ! =========================
 
 interface Vlan10
- mac-address 000c.85dd.0e01
  ip address 192.168.10.1 255.255.255.0
  standby 1 ip 192.168.10.254
  standby 1 priority 200
  standby 1 preempt
 
 interface Vlan20
- mac-address 000c.85dd.0e03
  ip address 192.168.20.1 255.255.255.0
  standby 1 ip 192.168.20.254
+ standby 1 priority 200
  standby 1 preempt
 
 interface Vlan30
- mac-address 000c.85dd.0e04
  ip address 192.168.30.1 255.255.255.0
  standby 1 ip 192.168.30.254
  standby 1 priority 200
  standby 1 preempt
 
 interface Vlan40
- mac-address 000c.85dd.0e05
  ip address 192.168.40.1 255.255.255.0
  standby 1 ip 192.168.40.254
  standby 1 priority 200
  standby 1 preempt
 
 interface Vlan50
- mac-address 000c.85dd.0e06
  ip address 192.168.50.1 255.255.255.0
  standby 1 ip 192.168.50.254
  standby 1 priority 200
  standby 1 preempt
 
 interface Vlan60
- mac-address 000c.85dd.0e07
  ip address 192.168.60.1 255.255.255.0
  standby 1 ip 192.168.60.254
  standby 1 priority 200
@@ -132,8 +142,6 @@ interface Vlan60
 ! =========================
 
 router rip
- version 2
- no auto-summary
  network 192.168.0.0
 
 ip classless
